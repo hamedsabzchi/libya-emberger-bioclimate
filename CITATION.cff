@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "Libya Emberger Bioclimatic Zoning"
+message: "If you use this software or workflow, please cite this repository and the archived release."
+type: software
+version: 1.0.0
+date-released: 2026-08-29
+authors:
+  - given-names: Hamed
+    family-names: Sabzchi Dehkharghani
+repository-code: "https://github.com/hamedsabzchi/libya-emberger-bioclimate"
+abstract: >-
+  Reproducible Google Earth Engine JavaScript and Python workflows for
+  historical and recent Emberger bioclimatic zoning in Libya, including
+  WorldClim, TerraClimate, ERA5-Land, CHIRPS-ERA5 hybrid analysis,
+  cross-dataset sensitivity assessment, area statistics, interactive maps,
+  and GeoTIFF exports.
+keywords:
+  - bioclimatic zoning
+  - Emberger Q2
+  - Google Earth Engine
+  - Python
+  - remote sensing
+  - climate
+  - Libya
