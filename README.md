@@ -71,6 +71,7 @@ Cross-dataset agreement is used as **sensitivity evidence**, not as ground-valid
 ```text
 libya-emberger-bioclimate/
 ├── README.md
+├── CITATION.cff
 ├── .gitignore
 ├── gee/
 │   └── libya_emberger_bioclimatic_zoning.js
@@ -135,7 +136,19 @@ The JavaScript application remains the reference implementation for the original
 
 GitHub Actions runs these static checks automatically on pushes and pull requests. These tests do **not** replace a live Earth Engine end-to-end run because Earth Engine execution requires authorized credentials.
 
-A successful live connection test has verified Python access to the Libya boundary and the TerraClimate collection for 1991–2020. Full scenario outputs should still be checked through the Colab notebook when changing scientific logic, dataset identifiers, or export behavior.
+A successful live connection test has verified Python access to the Libya boundary and the TerraClimate collection for 1991–2020. The complete Colab workflow has also been run successfully to map output. Full scenario outputs should be rechecked when changing scientific logic, dataset identifiers, or export behavior.
+
+## How to cite
+
+Citation metadata are provided in `CITATION.cff`. GitHub can use this file to expose a **Cite this repository** action.
+
+For scientific use, please cite the archived software release once a DOI has been issued by Zenodo. Until then, cite the GitHub repository and version number rather than inventing or guessing a DOI.
+
+Suggested pre-DOI citation:
+
+> Sabzchi Dehkharghani, H. (2026). *Libya Emberger Bioclimatic Zoning* (Version 1.0.0) [Software]. GitHub. https://github.com/hamedsabzchi/libya-emberger-bioclimate
+
+After Zenodo issues a DOI for the release, the DOI should be added to this section and to `CITATION.cff`.
 
 ## Scientific references used in the implementation
 
