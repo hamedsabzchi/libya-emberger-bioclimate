@@ -2,6 +2,8 @@
 
 A reproducible geospatial workflow for historical and recent bioclimatic zoning in Libya using the Emberger pluviothermic quotient (Q2), implemented in both Google Earth Engine JavaScript and Python.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22151541.svg)](https://doi.org/10.5281/zenodo.22151541)
+
 ## Project status
 
 The repository now contains:
@@ -142,13 +144,11 @@ A successful live connection test has verified Python access to the Libya bounda
 
 Citation metadata are provided in `CITATION.cff`. GitHub can use this file to expose a **Cite this repository** action.
 
-For scientific use, please cite the archived software release once a DOI has been issued by Zenodo. Until then, cite the GitHub repository and version number rather than inventing or guessing a DOI.
+Please cite the archived Zenodo release:
 
-Suggested pre-DOI citation:
+> Sabzchi Dehkharghani, H. (2026). *Libya Emberger Bioclimatic Zoning* (Version 1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.22151541
 
-> Sabzchi Dehkharghani, H. (2026). *Libya Emberger Bioclimatic Zoning* (Version 1.0.0) [Software]. GitHub. https://github.com/hamedsabzchi/libya-emberger-bioclimate
-
-After Zenodo issues a DOI for the release, the DOI should be added to this section and to `CITATION.cff`.
+**DOI:** `10.5281/zenodo.22151541`
 
 ## Scientific references used in the implementation
 
