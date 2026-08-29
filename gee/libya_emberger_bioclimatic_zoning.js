@@ -258,7 +258,7 @@ var titleLabel = ui.Label({
 
 var subtitleLabel = ui.Label({
   value:
-       'By: Hamed Sabzchi Dehkharghani - NSL Geospatial Unit - Food and Agriculture Organization of the United Nations',
+       'By: Hamed Sabzchi Dehkharghani',
   style: {
     fontSize: '12px',
     color: '#444444',
