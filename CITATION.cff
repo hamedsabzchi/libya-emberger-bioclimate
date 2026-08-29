@@ -1,13 +1,15 @@
 cff-version: 1.2.0
 title: "Libya Emberger Bioclimatic Zoning"
-message: "If you use this software or workflow, please cite this repository and the archived release."
+message: "If you use this software or workflow, please cite the archived Zenodo release."
 type: software
 version: 1.0.0
 date-released: 2026-08-29
+doi: "10.5281/zenodo.22151541"
 authors:
   - given-names: Hamed
     family-names: Sabzchi Dehkharghani
 repository-code: "https://github.com/hamedsabzchi/libya-emberger-bioclimate"
+url: "https://doi.org/10.5281/zenodo.22151541"
 abstract: >-
   Reproducible Google Earth Engine JavaScript and Python workflows for
   historical and recent Emberger bioclimatic zoning in Libya, including
