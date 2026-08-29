@@ -163,10 +163,12 @@ After Zenodo issues a DOI for the release, the DOI should be added to this secti
 
 Hamed Sabzchi Dehkharghani
 
-## Disclaimer
+## Independent personal-project notice
 
-This repository is a personal technical portfolio and research-development project. It should not be interpreted as an official institutional product or endorsement unless explicitly stated otherwise.
+This repository is an **independent personal technical portfolio and research-development project by Hamed Sabzchi Dehkharghani**. It is not published on behalf of any employer, organization, or institution. No institutional affiliation, sponsorship, approval, endorsement, or official status is claimed or implied.
+
+Names contained in dataset identifiers or scientific references identify data sources or publications only and do not imply institutional authorship or endorsement of this repository.
 
 ## Licensing note
 
-No open-source license is asserted by this repository at this stage. Publication, reuse, and licensing should be confirmed against any applicable institutional or employment-related rights before adding a software license.
+No open-source license is asserted by this repository at this stage. The repository is made publicly viewable for technical portfolio, reproducibility, and citation purposes; no broader reuse permission is granted by an explicit software license here.
