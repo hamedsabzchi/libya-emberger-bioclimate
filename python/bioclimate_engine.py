@@ -1,25 +1,4 @@
 """
-Libya Emberger Bioclimatic Zoning - Earth Engine Python engine.
-
-Faithful Python port of the scientific/analytical engine in the original
-Google Earth Engine JavaScript application. The original GEE UI is not
-ported here; map display is provided with Folium for Colab/notebook use.
-
-Scenarios
----------
-1. WorldClim V1 historical reference
-2. TerraClimate recent baseline
-3. ERA5-Land updated recent zoning
-4. TerraClimate + ERA5-Land cross-dataset sensitivity
-5. CHIRPS precipitation + ERA5-Land temperature hybrid
-
-Important scientific limitation
--------------------------------
-Outputs are bioclimatic zones, not complete agro-ecological zones (AEZ).
-They do not include soil, irrigation, land suitability/capability, land use,
-water quality, or crop-specific requirements.
-
-Dataset agreement in Scenario 4 is sensitivity evidence, not ground validation.
 """
 
 from __future__ import annotations
