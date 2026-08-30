@@ -1,64 +1,4 @@
-/**** =========================================================================
- LIBYA EMBERGER BIOCLIMATIC ZONING TOOL
- FINAL SIMPLIFIED VERSION
 
- PURPOSE
- Generate historical and recent bioclimatic zones for Libya using the
- Emberger pluviothermic quotient.
-
- FIVE AVAILABLE SCENARIOS
-
- 1. Historical reference: WorldClim
-    - Fixed historical WorldClim V1 climatology
-    - Intended for reference and comparison with historical Libyan maps
-
- 2. Recent climate baseline: TerraClimate
-    - Default period: 1991-2020
-    - Intended as the main recent climate-normal bioclimatic map
-
- 3. Updated recent zoning: ERA5-Land
-    - Default period: 1991-2025
-    - Includes more recent climate conditions
-    - This is an extended recent period, not a standard climate normal
-
- 4. Recommended comparison: TerraClimate + ERA5-Land
-    - Default common period: 1991-2020
-    - TerraClimate is used as the main spatial zoning
-    - ERA5-Land is used as an secondary comparison
-    - No averaging is performed
-    - Agreement and class-difference maps are produced
-
- MAIN OUTPUTS
-
- - Annual precipitation
- - Maximum temperature of the hottest month
- - Minimum temperature of the coldest month
- - Emberger Q2 index
- - Bioclimatic moisture zones
- - Winter thermal variants
- - Dataset agreement and disagreement
- - Area statistics
- - GeoTIFF export tasks
-
- IMPORTANT LIMITATION
-
- These are bioclimatic zones, not complete agro-ecological zones.
- Soil, irrigation, land suitability, land capability, land use,
- water quality and crop-specific requirements are not included.
-=============================================================================*/
-
-
-// SCIENTIFIC REFERENCES SUPPORTING THE IMPLEMENTATION
-// Emberger, L. (1930), original pluviothermic formulation.
-// Daget, P. (1977), Mediterranean bioclimate and Emberger system.
-// Funk et al. (2015), Scientific Data, CHIRPS, doi:10.1038/sdata.2015.66.
-// Abatzoglou et al. (2018), Scientific Data, TerraClimate,
-// doi:10.1038/sdata.2017.191.
-// Munoz-Sabater et al. (2021), Earth System Science Data, ERA5-Land,
-// doi:10.5194/essd-13-4349-2021.
-// WMO-No. 1203, Guidelines on the Calculation of Climate Normals.
-// IMPORTANT: Dataset agreement is sensitivity evidence, not ground validation.
-// =============================================================================
 
 // =============================================================================
 // 1. LIBYA BOUNDARY
@@ -163,8 +103,7 @@ var zoneNames = [
   'Perhumid'
 ];
 
-// These relative labels are used only for exploratory equal-frequency classes.
-// They must not be interpreted as formal Emberger bioclimatic stages.
+
 var relativeZoneNames = [
   'Lowest relative Q2',
   'Very low relative Q2',
@@ -2207,17 +2146,7 @@ function getClassificationThresholds(q2, manualThresholds) {
   ]);
 }
 
-// =============================================================================
-// 10A. MEMORY-SAFE DAILY-TO-MONTHLY AGGREGATION
-// =============================================================================
 
-// Why this is necessary:
-// Filtering all daily images for the same calendar month over 30-35 years and
-// reducing them in one operation can require hundreds of daily images per tile.
-// Earth Engine may then report "User memory limit exceeded". The functions
-// below first reduce each year-month separately, so every intermediate
-// reduction contains only about 28-31 daily images. The resulting monthly
-// images are then averaged across years.
 
 function createMonthlyClimatologyFromDailyExtremes(
   dailyCollection,
@@ -2337,17 +2266,7 @@ function createMonthlyClimatology(
 }
 
 
-// =============================================================================
-// 12. EMBERGER Q2 CALCULATION
-// =============================================================================
 
-// Emberger Q2 formula:
-//
-// Q2 = 2000 × P / (M² - m²)
-//
-// P = Annual precipitation in millimetres
-// M = mean maximum temperature of the hottest month in Kelvin
-// m = mean minimum temperature of the coldest month in Kelvin
 
 function calculateQ2(
   annualPrecipitation,
@@ -2400,18 +2319,7 @@ function classifyQ2(q2, thresholds) {
 }
 
 
-// =============================================================================
-// 14. WINTER THERMAL VARIANT CLASSIFICATION
-// =============================================================================
-
-// Winter variants are based on minimum temperature of the coldest month.
-//
-// Class 1: m < -3°C
-// Class 2: -3°C ≤ m < 0°C
-// Class 3: 0°C ≤ m < 3°C
-// Class 4: 3°C ≤ m < 7°C
-// Class 5: 7°C ≤ m < 10°C
-// Class 6: m ≥ 10°C
+/
 
 function classifyWinter(coldestMinC) {
   return ee.Image(1)
@@ -2710,10 +2618,7 @@ function buildERA5LandProduct(
     .filterDate(startDate, endDate)
     .filterBounds(libya);
 
-  // Precipitation is monthly accumulated total precipitation in metres.
-  // The code calculates the average value for each calendar month across
-  // years, sums the 12 monthly climatological totals, and converts metres
-  // to millimetres.
+ 
   var monthlyPrecipitationClimatology = createMonthlyClimatology(
     monthlyCollection.select('total_precipitation_sum'),
     ['total_precipitation_sum']
@@ -2729,10 +2634,7 @@ function buildERA5LandProduct(
     .rename('annual_precipitation_mm')
     .clip(libya);
 
-  // Temperature bands in ERA5-Land are in Kelvin. The monthly aggregated
-  // maximum/minimum bands represent monthly aggregation of daily maximum and
-  // minimum 2-m temperature, which is appropriate for deriving M and m as
-  // climatological monthly means rather than absolute multi-year records.
+
   var monthlyTemperatureClimatology = createMonthlyClimatology(
     monthlyCollection.select([
       'temperature_2m_max',
@@ -2835,10 +2737,7 @@ function buildCHIRPSERA5HybridProduct(
     .filterBounds(libya)
     .select('precipitation');
 
-  // CHIRPS supplies precipitation as daily millimetres. The helper function
-  // sums daily values month-by-month inside each year, then averages annual
-  // totals across years. This is scientifically cleaner for P and safer for
-  // Earth Engine memory than one large multi-decadal daily reduction.
+
   var annualPrecipitation = createMeanAnnualTotalFromDailyCollection(
     chirps,
     startYear,
@@ -2847,9 +2746,7 @@ function buildCHIRPSERA5HybridProduct(
     'annual_precipitation_mm'
   );
 
-  // ERA5-Land supplies M and m. Monthly aggregated temperature is used to
-  // avoid decades of daily temperature reductions while preserving the
-  // climatological monthly maximum/minimum concept required by Emberger Q2.
+
   var era5Monthly = ee.ImageCollection(
     'ECMWF/ERA5_LAND/MONTHLY_AGGR'
   )
@@ -4332,27 +4229,6 @@ if (AUTO_RUN_ON_STARTUP) {
 
 
 
-// 10. References supporting the application
-// Emberger methodology
-
-// Daget, P. (1977). Le bioclimat méditerranéen: analyse des formes climatiques par le système d’Emberger. Vegetatio, 34, 87–103. This is a core reference for the Mediterranean bioclimate and Emberger system.
-
-// Emberger, L. (1930). Sur une formule climatique applicable en géographie botanique. Comptes Rendus de l’Académie des Sciences. This is the foundational formulation referenced in subsequent Emberger literature.
-
-// Title, P. O., & Bemmels, J. B. (2018). ENVIREM climatic and topographic variables. The associated envirem implementation documents the modified Emberger equation and its raster calculation.
-
-// Climate datasets
-
-// Funk, C., et al. (2015). The Climate Hazards Infrared Precipitation with Stations: a new environmental record for monitoring extremes. Scientific Data, 2, 150066. DOI: 10.1038/sdata.2015.66. This is the principal CHIRPS reference.
-
-// Muñoz-Sabater, J., et al. (2021). ERA5-Land: a state-of-the-art global reanalysis dataset for land applications. Earth System Science Data, 13, 4349–4383. DOI: 10.5194/essd-13-4349-2021.
-
-// Abatzoglou, J. T., Dobrowski, S. Z., Parks, S. A., & Hegewisch, K. C. (2018). TerraClimate, a high-resolution global dataset of monthly climate and climatic water balance from 1958–2015. Scientific Data, 5, 170191. DOI: 10.1038/sdata.2017.191.
-
-// Fick, S. E., & Hijmans, R. J. (2017). WorldClim 2: new 1-km spatial resolution climate surfaces for global land areas. International Journal of Climatology, 37, 4302–4315. DOI: 10.1002/joc.5086. Cite this only if WorldClim 2 is actually used, not as a substitute citation for the GEE WorldClim V1 collection.
-
-// Climate-normal period
-// World Meteorological Organization. WMO Guidelines on the Calculation of Climate Normals, WMO-No. 1203. This supports using 1991–2020 as the climatological standard normal.
 
 
 
@@ -4365,12 +4241,6 @@ if (AUTO_RUN_ON_STARTUP) {
 
 
 
-
-
-// ============================================================
-// DYNAMIC NORTH ARROW + SCALE BAR
-// Add this complete block once at the end of the script.
-// ============================================================
 
 function addDynamicMapSymbols(mapWidget) {
   if (!mapWidget) {
@@ -4643,7 +4513,6 @@ function addDynamicMapSymbols(mapWidget) {
   };
 }
 
-// The attached Emberger application uses the default Map.
 var dynamicMapSymbols = addDynamicMapSymbols(Map);
 
 
