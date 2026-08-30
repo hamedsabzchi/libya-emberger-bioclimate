@@ -1,14 +1,6 @@
 #!/usr/bin/env python3
 """
-Minimal Google Earth Engine connection test for the Libya Emberger project.
 
-This script verifies that Python can:
-1. Authenticate and initialize Earth Engine.
-2. Read the Libya boundary from FAO GAUL.
-3. Access the TerraClimate ImageCollection.
-4. Request small metadata results from Earth Engine servers.
-
-It intentionally does not perform the full Bioclimate analysis yet.
 """
 
 from __future__ import annotations
